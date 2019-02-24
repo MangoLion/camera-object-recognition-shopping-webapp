@@ -5,7 +5,11 @@ maingui = {
       T: 0,
       R: 250,
       B: 0,
+      Data:{
+        Visible:false 
+      },
       style: {
+          
         borderStyle: 'dashed',
         borderColor: 'gray'
       }
@@ -20,6 +24,16 @@ maingui = {
         Text: 'Scan Items'
       }
     },
+    Event:{
+        OnClick:function(){
+            console.log("CLICKED");
+            GUI.currentItems.forEach(item=>{
+                AppForm.listItems.AddItem(item);
+            })
+
+            AppForm.Update();
+        }
+    },
     listItems: {
       Type: 'weList',
       T: 32,
@@ -28,6 +42,7 @@ maingui = {
       H: 200,
       Data: {
         HTMLEncode: true,
+        SelectType: nglSelectSingle,
         Items: []
       },
       style: {
@@ -47,8 +62,18 @@ maingui = {
     }
   }
   
-  GUI = {};
-  GUI.setItems = function(items){
+  GUI = {
+      currentItems:[],
+      capturing: false,
+      prices:{
+          "person": "N/A",
+          "cell phone": "$200",
+          "toothbrush": "$2",
+          "cup":"$1",
+        "remote": "$5"
+      }
+  };
+  GUI.SetItems = function(items){
       AppForm.listItems.setItems(items);
       Appform.Update();
   }
